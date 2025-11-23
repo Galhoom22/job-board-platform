@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 /**
  * JobCategory Model
@@ -26,5 +27,12 @@ class JobCategory extends Model
     public function jobVacancies()
     {
         return $this->hasMany(JobVacancy::class, 'job_category_id');
+    }
+
+    protected static function booted(): void
+    {
+        static::creating(function (JobCategory $category): void {
+            $category->slug = Str::slug($category->name);
+        });
     }
 }
