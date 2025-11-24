@@ -1,17 +1,111 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Job Categories') }}
+            {{ __('Job Categories') }} {{ request()->input('archived') === 'true' ? __('(Archived)') : '' }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("Job Categories") }}
-                </div>
-            </div>
+    <div class="overflow-x-auto p-6">
+        <x-toast-notification />
+
+        {{-- Archived --}}
+        <div class="mb-4">
+            @if (request()->input('archived') === 'true')
+                <a href="{{ route('job-categories.index') }}" class="text-sm text-gray-500 hover:text-gray-700 underline">
+                    {{ __('View Active Categories') }}
+                </a>
+            @else
+                <a href="{{ route('job-categories.index', ['archived' => 'true']) }}"
+                    class="text-sm text-gray-500 hover:text-gray-700 underline">
+                    {{ __('View Archived Categories') }}
+                </a>
+            @endif
+        </div>
+
+        {{-- Add Job Category Button --}}
+        <div class="flex justify-end items-center">
+            <a href="{{ route('job-categories.create') }}"
+                class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white
+               px-5 py-2.5 rounded-lg font-medium shadow-md hover:shadow-lg transition-all
+               hover:-translate-y-0.5 duration-200">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+
+                Add Job Category
+            </a>
+        </div>
+
+        <!-- Job Category Table -->
+        <table class="min-w-full divide-y divide-gray-200 rounded-lg shadow mt-4 bg-white">
+            <thead>
+                <tr>
+                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Category Name</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($categories as $category)
+                    <tr class="border-b">
+                        <td class="px-6 py-4 text-gray-800">
+                            <div class="font-semibold text-gray-900">
+                                {{ $category->name }}
+                            </div>
+
+                            @if ($category->description)
+                                <div class="text-gray-500 text-xs mt-1">
+                                    {{ Str::limit($category->description, 80) }}
+                                </div>
+                            @endif
+                        </td>
+                        <td>
+                            <div class="flex space-x-4">
+                                @if (request()->input('archived') === 'true')
+                                    {{-- Restore Button --}}
+                                    <form action="{{ route('job-categories.restore', $category->id) }}" method="POST"
+                                        class="inline-block">
+                                        @csrf
+                                        <button type="submit" class="text-green-500 hover:text-green-700">♻️
+                                            Restore</button>
+                                    </form>
+                                @else
+                                    {{-- Edit Button --}}
+                                    <a href="{{ route('job-categories.edit', $category->id) }}"
+                                        class="text-blue-500 hover:text-blue-700">
+                                        ✍️ Edit
+                                    </a>
+
+
+                                    {{-- Delete Button --}}
+                                    <form action="{{ route('job-categories.destroy', $category->id) }}" method="POST"
+                                        class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:text-red-700">🗃️
+                                            Archive</button>
+                                    </form>
+                                @endif
+                            </div>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="2" class="px-6 py-4 text-center text-gray-500">
+                            No job categories found.
+                        </td>
+                    </tr>
+                @endforelse
+            </tbody>
+        </table>
+
+        <div class="mt-4">
+            {{ $categories->links() }}
         </div>
     </div>
 </x-app-layout>

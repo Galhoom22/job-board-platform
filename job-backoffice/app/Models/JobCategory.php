@@ -21,7 +21,8 @@ class JobCategory extends Model
     public $incrementing = false;
 
     protected $fillable = [
-        'name'
+        'name',
+        'description',
     ];
 
     public function jobVacancies()
