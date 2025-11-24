@@ -5,12 +5,26 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Job Categories') }}
+            {{ __('Job Categories') }} {{ request()->input('archived') === 'true' ? __('(Archived)') : '' }}
         </h2>
     </x-slot>
 
     <div class="overflow-x-auto p-6">
         <x-toast-notification />
+
+        {{-- Archived --}}
+        <div class="mb-4">
+            @if (request()->input('archived') === 'true')
+                <a href="{{ route('job-categories.index') }}" class="text-sm text-gray-500 hover:text-gray-700 underline">
+                    {{ __('View Active Categories') }}
+                </a>
+            @else
+                <a href="{{ route('job-categories.index', ['archived' => 'true']) }}"
+                    class="text-sm text-gray-500 hover:text-gray-700 underline">
+                    {{ __('View Archived Categories') }}
+                </a>
+            @endif
+        </div>
 
         {{-- Add Job Category Button --}}
         <div class="flex justify-end items-center">
@@ -37,7 +51,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($categories as $category)
+                @forelse ($categories as $category)
                     <tr class="border-b">
                         <td class="px-6 py-4 text-gray-800">
                             <div class="font-semibold text-gray-900">
@@ -52,25 +66,41 @@
                         </td>
                         <td>
                             <div class="flex space-x-4">
-                                {{-- Edit Button --}}
-                                <a href="{{ route('job-categories.edit', $category->id) }}"
-                                    class="text-blue-500 hover:text-blue-700">
-                                    ✍️ Edit
-                                </a>
+                                @if (request()->input('archived') === 'true')
+                                    {{-- Restore Button --}}
+                                    <form action="{{ route('job-categories.restore', $category->id) }}" method="POST"
+                                        class="inline-block">
+                                        @csrf
+                                        <button type="submit" class="text-green-500 hover:text-green-700">♻️
+                                            Restore</button>
+                                    </form>
+                                @else
+                                    {{-- Edit Button --}}
+                                    <a href="{{ route('job-categories.edit', $category->id) }}"
+                                        class="text-blue-500 hover:text-blue-700">
+                                        ✍️ Edit
+                                    </a>
 
 
-                                {{-- Delete Button --}}
-                                <form action="{{ route('job-categories.destroy', $category->id) }}" method="POST"
-                                    class="inline-block">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-500 hover:text-red-700">🗃️
-                                        Archive</button>
-                                </form>
+                                    {{-- Delete Button --}}
+                                    <form action="{{ route('job-categories.destroy', $category->id) }}" method="POST"
+                                        class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:text-red-700">🗃️
+                                            Archive</button>
+                                    </form>
+                                @endif
                             </div>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="2" class="px-6 py-4 text-center text-gray-500">
+                            No job categories found.
+                        </td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
 
