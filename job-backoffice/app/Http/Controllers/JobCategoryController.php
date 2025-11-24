@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\JobCategory;
 use Illuminate\Http\Request;
 use App\Http\Requests\JobCategoryCreateRequest;
+use App\Http\Requests\JobCategoryUpdateRequest;
 
 class JobCategoryController extends Controller
 {
@@ -49,15 +50,19 @@ class JobCategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $category = JobCategory::findOrFail($id);
+        return view('job-category.edit', compact('category'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(JobCategoryUpdateRequest $request, string $id)
     {
-        //
+        $validated = $request->validated();
+        $category = JobCategory::findOrFail($id);
+        $category->update($validated);
+        return redirect()->route('job-categories.index')->with('success', 'Job category updated successfully!');
     }
 
     /**

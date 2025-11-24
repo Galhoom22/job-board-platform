@@ -1,3 +1,7 @@
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -35,7 +39,17 @@
             <tbody>
                 @foreach ($categories as $category)
                     <tr class="border-b">
-                        <td class="px-6 py-4 text-gray-800">{{ $category->name }}</td>
+                        <td class="px-6 py-4 text-gray-800">
+                            <div class="font-semibold text-gray-900">
+                                {{ $category->name }}
+                            </div>
+
+                            @if ($category->description)
+                                <div class="text-gray-500 text-xs mt-1">
+                                    {{ Str::limit($category->description, 80) }}
+                                </div>
+                            @endif
+                        </td>
                         <td>
                             <div class="flex space-x-4">
                                 {{-- Edit Button --}}
