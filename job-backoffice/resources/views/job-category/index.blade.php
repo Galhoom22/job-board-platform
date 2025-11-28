@@ -4,7 +4,7 @@
 
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        <h2 class="text-xl font-semibold leading-tight text-gray-800">
             {{ __('Job Categories') }} {{ request()->input('archived') === 'true' ? __('(Archived)') : '' }}
         </h2>
     </x-slot>
@@ -15,23 +15,21 @@
         {{-- Archived --}}
         <div class="mb-4">
             @if (request()->input('archived') === 'true')
-                <a href="{{ route('job-categories.index') }}" class="text-sm text-gray-500 hover:text-gray-700 underline">
+                <a href="{{ route('job-categories.index') }}" class="text-sm text-gray-500 underline hover:text-gray-700">
                     {{ __('View Active Categories') }}
                 </a>
             @else
                 <a href="{{ route('job-categories.index', ['archived' => 'true']) }}"
-                    class="text-sm text-gray-500 hover:text-gray-700 underline">
+                    class="text-sm text-gray-500 underline hover:text-gray-700">
                     {{ __('View Archived Categories') }}
                 </a>
             @endif
         </div>
 
         {{-- Add Job Category Button --}}
-        <div class="flex justify-end items-center">
+        <div class="flex items-center justify-end">
             <a href="{{ route('job-categories.create') }}"
-                class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white
-               px-5 py-2.5 rounded-lg font-medium shadow-md hover:shadow-lg transition-all
-               hover:-translate-y-0.5 duration-200">
+                class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 font-medium text-white shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
 
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
@@ -43,11 +41,11 @@
         </div>
 
         <!-- Job Category Table -->
-        <table class="min-w-full divide-y divide-gray-200 rounded-lg shadow mt-4 bg-white">
+        <table class="mt-4 min-w-full divide-y divide-gray-200 rounded-lg bg-white shadow">
             <thead>
                 <tr>
                     <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Category Name</th>
-                    <th class="px-6 py-3 text-left text-sm font-semibold text-gray-600">Actions</th>
+                    <th class="w-40 px-6 py-3 text-right text-sm font-semibold text-gray-600">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,38 +57,46 @@
                             </div>
 
                             @if ($category->description)
-                                <div class="text-gray-500 text-xs mt-1">
+                                <div class="mt-1 text-xs text-gray-500">
                                     {{ Str::limit($category->description, 80) }}
                                 </div>
                             @endif
                         </td>
-                        <td>
-                            <div class="flex space-x-4">
-                                @if (request()->input('archived') === 'true')
-                                    {{-- Restore Button --}}
-                                    <form action="{{ route('job-categories.restore', $category->id) }}" method="POST"
-                                        class="inline-block">
-                                        @csrf
-                                        <button type="submit" class="text-green-500 hover:text-green-700">♻️
-                                            Restore</button>
-                                    </form>
-                                @else
-                                    {{-- Edit Button --}}
-                                    <a href="{{ route('job-categories.edit', $category->id) }}"
-                                        class="text-blue-500 hover:text-blue-700">
-                                        ✍️ Edit
-                                    </a>
 
+                        <td class="px-6 py-4 text-right">
+                            <div class="flex justify-end space-x-4">
 
-                                    {{-- Delete Button --}}
-                                    <form action="{{ route('job-categories.destroy', $category->id) }}" method="POST"
-                                        class="inline-block">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-500 hover:text-red-700">🗃️
-                                            Archive</button>
-                                    </form>
-                                @endif
+                                {{-- Edit Button --}}
+                                <a href="{{ route('job-categories.edit', $category->id) }}"
+                                    class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5M18.5 2.5a2.121 2.121 0 113 3L12 15l-4 1 1-4 9.5-9.5z" />
+                                    </svg>
+
+                                    Edit
+                                </a>
+
+                                {{-- Archive Button --}}
+                                <form action="{{ route('job-categories.destroy', $category->id) }}" method="POST"
+                                    class="inline-flex items-center gap-1">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button class="inline-flex items-center gap-1 text-red-600 hover:text-red-800">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M4 7h16M9 7V4h6v3m-8 0v12a2 2 0 002 2h6a2 2 0 002-2V7" />
+                                        </svg>
+
+                                        Archive
+                                    </button>
+                                </form>
+
                             </div>
                         </td>
                     </tr>
@@ -103,6 +109,7 @@
                 @endforelse
             </tbody>
         </table>
+
 
         <div class="mt-4">
             {{ $categories->links() }}

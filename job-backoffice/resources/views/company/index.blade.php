@@ -1,7 +1,3 @@
-@php
-    use Illuminate\Support\Str;
-@endphp
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -59,7 +55,7 @@
 
                         {{-- Name --}}
                         <td class="px-6 py-4 font-semibold text-gray-900">
-                            {{ $company->name }}
+                            <a class="text-blue-600 hover:text-blue-700 underline" href="{{ route('companies.show', $company->id) }}">{{ $company->name }}</a>
                         </td>
 
                         {{-- Address --}}
@@ -74,7 +70,7 @@
 
                         {{-- Website --}}
                         <td class="px-6 py-4 text-blue-600 underline">
-                            <a href="{{ $company->website }}" target="_blank">
+                            <a class="text-blue-600 hover:text-blue-700 underline" href="{{ $company->website }}" target="_blank">
                                 {{ $company->website }}
                             </a>
                         </td>

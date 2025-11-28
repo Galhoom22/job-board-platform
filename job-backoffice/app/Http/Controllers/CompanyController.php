@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Company;
 use App\Http\Requests\CompanyCreateRequest;
 use App\Http\Requests\CompanyUpdateRequest;
+use App\Models\JobApplication;
 
 class CompanyController extends Controller
 {
@@ -50,7 +51,19 @@ class CompanyController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $company = Company::findOrFail($id);
+
+        $jobs = $company->jobVacancies()
+            ->latest()
+            ->paginate(10)
+            ->onEachSide(1);
+
+        $applications = $company->jobApplications()
+            ->latest()
+            ->paginate(10)
+            ->onEachSide(1);
+
+        return view('company.show', compact('company', 'jobs', 'applications'));
     }
 
     /**
