@@ -570,35 +570,6 @@ The platform supports multiple employment types:
 
 ---
 
-## 🖼️ Visuals & Screenshots
-
-### Candidate Portal (`job-app`)
-
-![Candidate Portal - Home Page](https://via.placeholder.com/800x450.png?text=Candidate+Portal+-+Home+Page)
-
-![Candidate Portal - Job Listings](https://via.placeholder.com/800x450.png?text=Candidate+Portal+-+Job+Listings)
-
-![Candidate Portal - User Dashboard](https://via.placeholder.com/800x450.png?text=Candidate+Portal+-+User+Dashboard)
-
-![Candidate Portal - Profile Management](https://via.placeholder.com/800x450.png?text=Candidate+Portal+-+Profile+Management)
-
-### Admin Backoffice (`job-backoffice`)
-
-![Admin Backoffice - Login Page](https://via.placeholder.com/800x450.png?text=Admin+Backoffice+-+Login+Page)
-
-![Admin Backoffice - Dashboard](https://via.placeholder.com/800x450.png?text=Admin+Backoffice+-+Dashboard)
-
-![Admin Backoffice - Companies Management](https://via.placeholder.com/800x450.png?text=Admin+Backoffice+-+Companies+Management)
-
-![Admin Backoffice - Job Vacancies](https://via.placeholder.com/800x450.png?text=Admin+Backoffice+-+Job+Vacancies)
-
-![Admin Backoffice - Applications Tracking](https://via.placeholder.com/800x450.png?text=Admin+Backoffice+-+Applications+Tracking)
-
-> [!TIP]
-> Replace the placeholder images above with actual screenshots of your application. Save images to a `/docs/images` directory and update the paths accordingly.
-
----
-
 ## 🧪 Quality Assurance
 
 Both applications enforce code quality standards through automated testing and linting.
