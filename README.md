@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License" />
 </p>
 
-<h1 align="center">🚀 Enterprise Job Board Platform (In Active Development)</h1>
+<h1 align="center">🚀 Job Board Platform</h1>
 
 <p align="center">
   <strong>A scalable, modular monorepo architecture for a complete job board solution</strong>
