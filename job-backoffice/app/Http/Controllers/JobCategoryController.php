@@ -12,9 +12,14 @@ class JobCategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = JobCategory::latest()->paginate(10)->onEachSide(1);
+        if ($request->boolean('archived')) {
+            $categories = JobCategory::onlyTrashed()->latest()->paginate(10)->onEachSide(1);
+        } else {
+            $categories = JobCategory::latest()->paginate(10)->onEachSide(1);
+        }
+        
         return view('job-category.index', compact('categories'));
     }
 
@@ -67,6 +72,15 @@ class JobCategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = JobCategory::findOrFail($id);
+        $category->delete();
+        return redirect()->route('job-categories.index')->with('success', 'Category Archived successfully');
+    }
+
+    public function restore(string $id)
+    {
+        $category = JobCategory::withTrashed()->findOrFail($id);
+        $category->restore();
+        return redirect()->route('job-categories.index', ['archived' => true])->with('success', 'Category Restored successfully');
     }
 }
