@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\JobCategory;
 
 class JobCategoryController extends Controller
 {
@@ -11,7 +12,8 @@ class JobCategoryController extends Controller
      */
     public function index()
     {
-        return view('job-category.index');
+        $categories = JobCategory::latest()->paginate(10)->onEachSide(1);
+        return view('job-category.index', compact('categories'));
     }
 
     /**

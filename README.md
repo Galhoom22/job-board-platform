@@ -30,7 +30,6 @@
 - [🌐 Environment Variables](#-environment-variables)
 - [🔑 Key Features](#-key-features)
 - [🛤️ Key Routes & API Endpoints](#️-key-routes--api-endpoints)
-- [🖼️ Visuals & Screenshots](#️-visuals--screenshots)
 - [🧪 Quality Assurance](#-quality-assurance)
 - [📁 Directory Structure](#-directory-structure)
 - [🚀 Deployment](#-deployment)
