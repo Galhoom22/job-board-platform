@@ -14,11 +14,20 @@ class JobCategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $query = JobCategory::query();
+
+        // Filter by archived status
         if ($request->boolean('archived')) {
-            $categories = JobCategory::onlyTrashed()->latest()->paginate(10)->onEachSide(1);
-        } else {
-            $categories = JobCategory::latest()->paginate(10)->onEachSide(1);
+            $query->onlyTrashed();
         }
+
+        // Search by name or description
+        $query->when($request->search, function ($q, $search) {
+            $q->where('name', 'like', "%{$search}%")
+              ->orWhere('description', 'like', "%{$search}%");
+        });
+
+        $categories = $query->latest()->paginate(10)->onEachSide(1);
         
         return view('job-category.index', compact('categories'));
     }

@@ -11,8 +11,29 @@
         {{-- Success Message --}}
         <x-toast-notification/>
 
-        {{-- Action Buttons --}}
-        <div class="flex justify-end mb-4 gap-3">
+        {{-- Search & Action Bar --}}
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+            {{-- Search Form --}}
+            <form action="{{ route('job-categories.index') }}" method="GET" class="flex-1 max-w-md" x-data x-ref="searchForm">
+                @if(request()->boolean('archived'))
+                    <input type="hidden" name="archived" value="true">
+                @endif
+                <div class="relative">
+                    <input type="text" name="search" value="{{ request('search') }}" 
+                           placeholder="Search categories by name or description..."
+                           @input.debounce.750ms="$refs.searchForm.submit()"
+                           x-init="@if(request('search')) $el.focus(); $el.setSelectionRange($el.value.length, $el.value.length) @endif"
+                           class="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-blue-500 transition-all duration-150">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                </div>
+            </form>
+
+            {{-- Action Buttons --}}
+            <div class="flex gap-3">
             {{-- Toggle Active/Archived Button --}}
             @if(request()->boolean('archived'))
                 <a href="{{ route('job-categories.index') }}" 
@@ -32,14 +53,17 @@
                 </a>
             @endif
 
-            {{-- Create Job Category Button --}}
-            <a href="{{ route('job-categories.create') }}" 
-               class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-medium text-sm text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                </svg>
-                {{ __('Create Category') }}
-            </a>
+            {{-- Create Job Category Button (Only in Active view) --}}
+            @if(!request()->boolean('archived'))
+                <a href="{{ route('job-categories.create') }}" 
+                   class="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 border border-transparent rounded-lg font-medium text-sm text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    {{ __('Create Category') }}
+                </a>
+            @endif
+            </div>
         </div>
 
         {{-- Job Category Table --}}
