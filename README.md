@@ -94,7 +94,8 @@ A restricted-access administrative panel for recruiters and platform managers.
 |---------|-------------|
 | **Tenant Management** | Full CRUD operations for Companies and Recruiters |
 | **ATS Features** | Application Tracking System to review, accept, or reject submissions |
-| **Taxonomy Management** | Dynamic control over Job Categories and Attributes |
+| **Taxonomy Management** | Dynamic control over Job Categories with search, archive, and restore |
+| **Reusable Components** | Icon, Button, Action Button, and Form Input Blade components |
 | **Data Seeding** | Built-in mechanisms to populate the database with initial data |
 
 ---
@@ -166,7 +167,12 @@ job-board-platform/
 │   ├── resources/views/
 │   │   ├── auth/                  # Admin authentication views
 │   │   ├── company/               # Company management views
-│   │   ├── components/            # Blade components
+│   │   ├── components/            # Reusable Blade components
+│   │   │   ├── icon.blade.php     # SVG icon component
+│   │   │   ├── btn.blade.php      # Button component (multiple colors)
+│   │   │   ├── action-btn.blade.php # Table action buttons (edit/archive/restore)
+│   │   │   ├── form-input.blade.php # Form input with validation
+│   │   │   └── toast-notification.blade.php # Flash messages
 │   │   ├── dashboard/             # Admin dashboard
 │   │   ├── job-application/       # Application views
 │   │   ├── job-category/          # Category views
@@ -230,6 +236,7 @@ erDiagram
     JobCategory {
         uuid id PK
         string name
+        string slug UK
         text description
         timestamps created_at
         timestamps updated_at
@@ -492,6 +499,18 @@ The platform supports multiple employment types:
 - ✅ **Eloquent Relationships** - Well-defined entity relationships
 - ✅ **Type Casting** - Automatic attribute casting
 
+### Blade Components
+
+Reusable UI components in the Admin Backoffice:
+
+| Component | Usage | Description |
+|-----------|-------|-------------|
+| `<x-icon name="..."/>` | Icons | SVG icons (plus, edit, archive, restore, search, check) |
+| `<x-btn/>` | Buttons | Colored buttons with icons (blue, green, gray, red, white) |
+| `<x-action-btn/>` | Table Actions | Edit, Archive, Restore buttons for table rows |
+| `<x-form-input/>` | Form Fields | Text input/textarea with Alpine.js error handling |
+| `<x-toast-notification/>` | Flash Messages | Success/error notifications with auto-dismiss |
+
 ---
 
 ## 🛤️ Key Routes & API Endpoints
@@ -539,7 +558,14 @@ The platform supports multiple employment types:
 | `GET` | `/` | `dashboard` | Admin dashboard (requires auth) |
 | `GET` | `/companies` | `company.index` | List all companies |
 | `GET` | `/job-applications` | `application.index` | List all job applications |
-| `GET` | `/job-categories` | `category.index` | List all job categories |
+| `GET` | `/job-categories` | `job-categories.index` | List all job categories |
+| `GET` | `/job-categories?archived=1` | `job-categories.index` | List archived categories |
+| `GET` | `/job-categories/create` | `job-categories.create` | Create category form |
+| `POST` | `/job-categories` | `job-categories.store` | Store new category |
+| `GET` | `/job-categories/{id}/edit` | `job-categories.edit` | Edit category form |
+| `PUT` | `/job-categories/{id}` | `job-categories.update` | Update category |
+| `DELETE` | `/job-categories/{id}` | `job-categories.destroy` | Archive category (soft delete) |
+| `POST` | `/job-categories/{id}/restore` | `job-categories.restore` | Restore archived category |
 | `GET` | `/job-vacancies` | `job-vacancy.index` | List all job vacancies |
 | `GET` | `/users` | `user.index` | List all users |
 | `GET` | `/profile` | `profile.edit` | Display admin profile edit form |
