@@ -14,6 +14,7 @@ return new class extends Migration
             // Core data
             $table->string('name')->unique();
             $table->string('slug')->unique();
+            $table->text('description')->nullable();
 
             // Hierarchy (parent category)
             $table->foreignUuid('parent_id')

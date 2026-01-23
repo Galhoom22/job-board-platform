@@ -34,10 +34,15 @@
                 </thead>
                 <tbody class="divide-y divide-gray-100">
                     @foreach ($categories as $category)
-                    <tr class="hover:bg-gray-50 transition-colors duration-150">
+                    <tr class="hover:bg-blue-50 hover:shadow-sm transition-all duration-150">
 
-                        {{-- Category Name --}}
-                        <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{{ $category->name }}</td>
+                        {{-- Category Name & Description --}}
+                        <td class="px-4 sm:px-6 py-4">
+                            <div class="text-sm font-medium text-gray-800">{{ $category->name }}</div>
+                            @if($category->description)
+                                <div class="text-xs text-gray-500 mt-1 line-clamp-1">{{ $category->description }}</div>
+                            @endif
+                        </td>
                         
                         {{-- Actions --}}
                         <td class="px-4 sm:px-6 py-4 whitespace-nowrap text-right">

@@ -22,7 +22,8 @@ class JobCategory extends Model
 
     protected $fillable = [
         'name',
-        'slug'
+        'slug',
+        'description'
     ];
 
     protected static function boot()

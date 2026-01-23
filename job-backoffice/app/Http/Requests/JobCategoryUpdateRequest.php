@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class JobCategoryCreateRequest extends FormRequest
+class JobCategoryUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class JobCategoryCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:job_categories,name',
+            'name' => 'required|string|max:255|unique:job_categories,name,' . $this->route('job_category'),
             'description' => 'nullable|string|max:500',
         ];
     }
@@ -32,26 +32,10 @@ class JobCategoryCreateRequest extends FormRequest
         return [
             'name.required' => 'Category name is required',
             'name.unique' => 'Category name already exists',
-            'name.max' => 'Category name must be less than 255 characters',
             'name.string' => 'Category name must be a string',
+            'name.max' => 'Category name must be less than 255 characters',
             'description.string' => 'Description must be a string',
             'description.max' => 'Description must be less than 500 characters',
         ];
-    }
-
-    public function attributes(): array
-    {
-        return [
-            'name' => 'Category Name',
-        ];
-    }
-
-    public function withValidator($validator)
-    {
-        $validator->after(function ($validator) {
-            if ($this->name == 'Admin') {
-                $validator->errors()->add('name', 'Category name cannot be Admin');
-            }
-        });
     }
 }

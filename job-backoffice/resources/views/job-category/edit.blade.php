@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create Job Category') }}
+            {{ __('Edit Job Category') }}
         </h2>
     </x-slot>
 
@@ -9,8 +9,9 @@
         <div class="max-w-2xl mx-auto">
             <div class="bg-white overflow-hidden rounded-xl shadow-sm border border-gray-200">
                 <div class="p-6">
-                    <form action="{{ route('job-categories.store') }}" method="POST">
+                    <form action="{{ route('job-categories.update', $category->id) }}" method="POST">
                         @csrf
+                        @method('PUT')
                         
                         {{-- Category Name Field --}}
                         <div class="mb-6" x-data="{ hasError: {{ $errors->has('name') ? 'true' : 'false' }} }">
@@ -18,12 +19,12 @@
                                 {{ __('Category Name') }}
                             </label>
                             
-                            <input type="text" name="name" id="name" value="{{ old('name') }}" 
+                            <input type="text" name="name" id="name" value="{{ old('name', $category->name) }}" 
                                    placeholder="Enter category name..."
                                    @input="hasError = false"
                                    :class="hasError 
                                        ? 'border-red-400 bg-red-50 text-red-900 placeholder-red-400 focus:border-red-500 focus:ring-red-500' 
-                                       : 'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500'"
+                                       : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'"
                                    class="block w-full rounded-lg shadow-sm text-sm transition-all duration-200 px-4 py-2.5">
                             
                             {{-- Error Message --}}
@@ -52,7 +53,7 @@
                                       :class="hasError 
                                           ? 'border-red-400 bg-red-50 text-red-900 placeholder-red-400 focus:border-red-500 focus:ring-red-500' 
                                           : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'"
-                                      class="block w-full rounded-lg shadow-sm text-sm transition-all duration-200 px-4 py-2.5 resize-none">{{ old('description') }}</textarea>
+                                      class="block w-full rounded-lg shadow-sm text-sm transition-all duration-200 px-4 py-2.5 resize-none">{{ old('description', $category->description) }}</textarea>
                             
                             {{-- Error Message --}}
                             <p x-show="hasError" 
@@ -78,13 +79,13 @@
                                 {{ __('Cancel') }}
                             </a>
                             
-                            {{-- Create Button --}}
+                            {{-- Update Button --}}
                             <button type="submit" 
                                     class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 border border-transparent rounded-lg text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-150">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                 </svg>
-                                {{ __('Create Category') }}
+                                {{ __('Update Category') }}
                             </button>
                         </div>
                         
