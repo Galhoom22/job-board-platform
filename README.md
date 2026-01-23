@@ -21,6 +21,7 @@
 ## 📑 Table of Contents
 
 - [🎯 Overview](#-overview)
+- [🖼️ Admin Backoffice Screenshots](#-admin-backoffice-screenshots)
 - [🏗️ System Architecture](#️-system-architecture)
 - [🗂️ Project Structure](#️-project-structure)
 - [📊 Entity Relationship Diagram](#-entity-relationship-diagram)
@@ -47,6 +48,22 @@ The **Enterprise Job Board Platform** is a production-ready recruitment solution
 
 > [!IMPORTANT]
 > This platform uses **UUID-based primary keys** for all entities, ensuring distributed system compatibility and enhanced security.
+
+---
+
+## 🖼️ Admin Backoffice Screenshots
+
+<p align="center">
+  <strong>Active Job Categories</strong>
+</p>
+
+<img width="2560" height="1440" alt="Active Job Categories" src="https://github.com/user-attachments/assets/7bc29d8f-30ad-4e32-a50d-8a70db209668" />
+
+<p align="center">
+  <strong>Archived Job Categories</strong>
+</p>
+
+<img width="2560" height="1440" alt="Archived Job Categories" src="https://github.com/user-attachments/assets/22e90865-f533-4e19-b355-ca3d8bcfb60d" />
 
 ---
 
