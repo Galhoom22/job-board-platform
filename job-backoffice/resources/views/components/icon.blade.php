@@ -9,6 +9,7 @@ $icons = [
     'search' => 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z',
     'check-circle' => 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
     'arrow-left' => 'M10 19l-7-7m0 0l7-7m-7 7h18',
+    'check' => 'M5 13l4 4L19 7',
 ];
 
 $path = $icons[$name] ?? '';
