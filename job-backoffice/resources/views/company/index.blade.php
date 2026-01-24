@@ -71,10 +71,16 @@
 
                         {{-- Company Name --}}
                         <td class="px-4 sm:px-6 py-4">
-                            <a href="{{ route('companies.show', $company) }}" 
-                               class="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline transition-colors">
-                                {{ $company->name }}
-                            </a>
+                            @if($company->trashed())
+                                <span class="text-sm font-medium text-gray-500">
+                                    {{ $company->name }}
+                                </span>
+                            @else
+                                <a href="{{ route('companies.show', $company) }}" 
+                                   class="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline transition-colors">
+                                    {{ $company->name }}
+                                </a>
+                            @endif
                         </td>
 
                         {{-- Address --}}
