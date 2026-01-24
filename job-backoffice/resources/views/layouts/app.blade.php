@@ -41,7 +41,7 @@
                         >
                             <x-icon name="menu" class="w-5 h-5"/>
                         </button>
-                        {{ $header }}
+                        <div class="flex-1">{{ $header }}</div>
                     </div>
                 </header>
             @endisset

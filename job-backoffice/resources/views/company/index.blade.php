@@ -71,7 +71,10 @@
 
                         {{-- Company Name --}}
                         <td class="px-4 sm:px-6 py-4">
-                            <div class="text-sm font-medium text-gray-800">{{ $company->name }}</div>
+                            <a href="{{ route('companies.show', $company) }}" 
+                               class="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline transition-colors">
+                                {{ $company->name }}
+                            </a>
                         </td>
 
                         {{-- Address --}}
