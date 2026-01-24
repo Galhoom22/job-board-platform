@@ -26,6 +26,8 @@ class CompanyUpdateRequest extends FormRequest
             'address' => 'required|string|max:500',
             'industry' => 'required|string|max:100',
             'website' => 'nullable|url|max:255',
+            'owner_name' => 'required|string|max:255',
+            'owner_password' => 'nullable|string|min:8',
         ];
     }
 
@@ -36,12 +38,17 @@ class CompanyUpdateRequest extends FormRequest
             'name.unique' => 'Company name already exists',
             'name.string' => 'Company name must be a string',
             'name.max' => 'Company name must be less than 255 characters',
+            'address.required' => 'Address is required',
             'address.string' => 'Address must be a string',
             'address.max' => 'Address must be less than 500 characters',
+            'industry.required' => 'Industry is required',
             'industry.string' => 'Industry must be a string',
             'industry.max' => 'Industry must be less than 100 characters',
             'website.url' => 'Website must be a valid URL',
             'website.max' => 'Website must be less than 255 characters',
+            'owner_name.required' => 'Owner name is required',
+            'owner_name.max' => 'Owner name must be less than 255 characters',
+            'owner_password.min' => 'Owner password must be at least 8 characters',
         ];
     }
 
@@ -52,6 +59,8 @@ class CompanyUpdateRequest extends FormRequest
             'address' => 'Address',
             'industry' => 'Industry',
             'website' => 'Website',
+            'owner_name' => 'Owner Name',
+            'owner_password' => 'Owner Password',
         ];
     }
 

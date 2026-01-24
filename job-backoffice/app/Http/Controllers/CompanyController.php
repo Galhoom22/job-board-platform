@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 class CompanyController extends Controller
 {
+    public $industries = ['Technology', 'Health', 'Finance', 'Education', 'Marketing', 'Retail', 'Manufacturing', 'Transportation', 'Energy', 'Entertainment'];
     /**
      * Display a listing of the resource.
      */
@@ -39,7 +40,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        $industries = ['Technology', 'Health', 'Finance', 'Education', 'Marketing', 'Retail', 'Manufacturing', 'Transportation', 'Energy', 'Entertainment'];
+        $industries = $this->industries;
         return view('company.create', compact('industries'));
     }
 
@@ -87,7 +88,8 @@ class CompanyController extends Controller
     public function edit(string $id)
     {
         $company = Company::findOrFail($id);
-        return view('company.edit', compact('company'));
+        $industries = $this->industries;
+        return view('company.edit', compact('company', 'industries'));
     }
 
     /**
@@ -96,8 +98,33 @@ class CompanyController extends Controller
     public function update(CompanyUpdateRequest $request, string $id)
     {
         $company = Company::findOrFail($id);
-        $company->update($request->validated());
-        return redirect()->route('companies.index')->with('success', 'Company updated successfully');
+        
+        // Update company details
+        $company->update([
+            'name' => $request->name,
+            'address' => $request->address,
+            'industry' => $request->industry,
+            'website' => $request->website,
+        ]);
+
+        // Update owner details
+        if ($company->owner) {
+            $company->owner->name = $request->owner_name;
+            
+            // Only update password if provided
+            if ($request->filled('owner_password')) {
+                $company->owner->password = Hash::make($request->owner_password);
+            }
+            
+            $company->owner->save();
+        }
+
+        // Determine redirect destination
+        $redirectTo = $request->redirect_to === 'show' 
+            ? route('companies.show', $company) 
+            : route('companies.index');
+
+        return redirect($redirectTo)->with('success', 'Company updated successfully');
     }
 
     /**

@@ -15,7 +15,7 @@
 
             {{-- Right: Action Buttons --}}
             <div class="flex items-center gap-2">
-                <x-action-btn type="edit" :href="route('companies.edit', $company)"/>
+                <x-action-btn type="edit" :href="route('companies.edit', ['company' => $company, 'from' => 'show'])"/>
                 <x-action-btn type="archive" :action="route('companies.destroy', $company)"/>
             </div>
         </div>
