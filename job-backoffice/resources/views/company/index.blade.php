@@ -20,7 +20,7 @@
                 @endif
                 <div class="relative">
                     <input type="text" name="search" value="{{ request('search') }}" 
-                           placeholder="Search companies by name..."
+                           placeholder="Search by name, industry, or address..."
                            @input.debounce.750ms="$refs.searchForm.submit()"
                            x-init="@if(request('search')) $el.focus(); $el.setSelectionRange($el.value.length, $el.value.length) @endif"
                            class="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-blue-500 transition-all duration-150">

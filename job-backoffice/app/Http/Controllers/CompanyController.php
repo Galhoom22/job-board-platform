@@ -24,10 +24,11 @@ class CompanyController extends Controller
             $query->onlyTrashed();
         }
 
-        // Search by name or description
+        // Search by name, industry, or address
         $query->when($request->search, function ($q, $search) {
             $q->where('name', 'like', "%{$search}%")
-              ->orWhere('description', 'like', "%{$search}%");
+              ->orWhere('industry', 'like', "%{$search}%")
+              ->orWhere('address', 'like', "%{$search}%");
         });
 
         $companies = $query->latest()->paginate(10)->onEachSide(1);
