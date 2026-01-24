@@ -23,8 +23,8 @@ class CompanyUpdateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|unique:companies,name,' . $this->route('company'),
-            'address' => 'nullable|string|max:500',
-            'industry' => 'nullable|string|max:100',
+            'address' => 'required|string|max:500',
+            'industry' => 'required|string|max:100',
             'website' => 'nullable|url|max:255',
         ];
     }

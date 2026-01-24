@@ -28,6 +28,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg divide-y divide-gray-200">
                 
                 {{-- Company Details --}}
+                <x-detail-row label="Company Owner" :value="$company->owner?->name"/>
                 <x-detail-row label="Address" :value="$company->address"/>
                 <x-detail-row label="Industry" :value="$company->industry"/>
                 

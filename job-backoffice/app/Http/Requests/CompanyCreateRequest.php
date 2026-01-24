@@ -23,9 +23,12 @@ class CompanyCreateRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|unique:companies,name',
-            'address' => 'nullable|string|max:500',
-            'industry' => 'nullable|string|max:100',
+            'address' => 'required|string|max:500',
+            'industry' => 'required|string|max:100',
             'website' => 'nullable|url|max:255',
+            'owner_name' => 'required|string|max:255',
+            'owner_email' => 'required|email|unique:users,email',
+            'owner_password' => 'required|string|min:8',
         ];
     }
 
@@ -36,12 +39,21 @@ class CompanyCreateRequest extends FormRequest
             'name.unique' => 'Company name already exists',
             'name.max' => 'Company name must be less than 255 characters',
             'name.string' => 'Company name must be a string',
+            'address.required' => 'Address is required',
             'address.string' => 'Address must be a string',
             'address.max' => 'Address must be less than 500 characters',
+            'industry.required' => 'Industry is required',
             'industry.string' => 'Industry must be a string',
             'industry.max' => 'Industry must be less than 100 characters',
             'website.url' => 'Website must be a valid URL',
             'website.max' => 'Website must be less than 255 characters',
+            'owner_name.required' => 'Owner name is required',
+            'owner_name.max' => 'Owner name must be less than 255 characters',
+            'owner_email.required' => 'Owner email is required',
+            'owner_email.email' => 'Owner email must be a valid email',
+            'owner_email.unique' => 'Owner email already exists',
+            'owner_password.required' => 'Owner password is required',
+            'owner_password.min' => 'Owner password must be at least 8 characters',
         ];
     }
 
@@ -52,6 +64,9 @@ class CompanyCreateRequest extends FormRequest
             'address' => 'Address',
             'industry' => 'Industry',
             'website' => 'Website',
+            'owner_name' => 'Owner Name',
+            'owner_email' => 'Owner Email',
+            'owner_password' => 'Owner Password',
         ];
     }
 
