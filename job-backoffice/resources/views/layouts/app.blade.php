@@ -17,18 +17,31 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased" x-data x-init="Alpine.store('sidebar', { open: true })">
     <div class="flex">
         <!-- Sidebar -->
         @include('layouts.navigation')
 
         <!-- Main Content -->
-        <div class="flex-1 min-h-screen bg-gray-100">
+        <div 
+            class="flex-1 min-h-screen bg-gray-100 transition-all duration-300"
+            :class="$store.sidebar.open ? '' : 'rounded-l-2xl shadow-lg'"
+        >
             <!-- Page Heading -->
             @isset($header)
                 <header class="bg-white shadow w-full">
-                    <div class="w-full py-4 px-4">
-                        {{ $header }}
+                    <div class="w-full py-4 px-4 flex items-center gap-4">
+                        {{-- Toggle Sidebar Button (shows when sidebar is closed) --}}
+                        <button 
+                            x-show="!$store.sidebar.open"
+                            x-transition
+                            @click="$store.sidebar.open = true" 
+                            class="p-2 rounded-lg hover:bg-gray-100 text-gray-600 hover:text-gray-800 transition-colors"
+                            title="Open Sidebar"
+                        >
+                            <x-icon name="menu" class="w-5 h-5"/>
+                        </button>
+                        <div class="flex-1">{{ $header }}</div>
                     </div>
                 </header>
             @endisset

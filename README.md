@@ -154,7 +154,9 @@ job-board-platform/
 │
 ├── 📂 job-backoffice/             # Admin Backoffice Application
 │   ├── app/
-│   │   ├── Http/Controllers/
+│   │   ├── Http/
+│   │   │   ├── Requests/          # Form validation requests (CompanyCreateRequest, etc.)
+│   │   │   ├── Controllers/
 │   │   │   ├── Auth/              # Admin authentication controllers
 │   │   │   │   ├── AuthenticatedSessionController.php
 │   │   │   │   ├── ConfirmablePasswordController.php
@@ -508,6 +510,13 @@ The platform supports multiple employment types:
 | 🏠 **Remote** | `remote` | Work from anywhere opportunities |
 | 🎓 **Internship** | `internship` | Entry-level/training positions |
 
+### Company & Recruiter Management
+
+- 🏢 **Tenant Management** - Full profile management with distinct "Details" and "Owner" sections
+- 🔗 **Owner Integration** - Auto-generates user accounts for company owners
+- 🔍 **Enhanced Search** - Query by Company Name, Industry, or Address
+- 🗃️ **Archive & Restore** - Toggle between active and archived companies with restore capability
+
 ### Model Features
 
 - ✅ **UUID Primary Keys** - Distributed system ready
@@ -573,7 +582,14 @@ Reusable UI components in the Admin Backoffice:
 | HTTP Method | URI | Route Name | Description |
 |-------------|-----|------------|-------------|
 | `GET` | `/` | `dashboard` | Admin dashboard (requires auth) |
-| `GET` | `/companies` | `company.index` | List all companies |
+| `GET` | `/companies` | `companies.index` | List all companies (supports filtering & search) |
+| `GET` | `/companies/create` | `companies.create` | Show company creation form |
+| `POST` | `/companies` | `companies.store` | Store new company & owner |
+| `GET` | `/companies/{id}` | `companies.show` | View company details & tabs |
+| `GET` | `/companies/{id}/edit` | `companies.edit` | Show edit form |
+| `PUT` | `/companies/{id}` | `companies.update` | Update company & owner details |
+| `DELETE` | `/companies/{id}` | `companies.destroy` | Archive company (soft delete) |
+| `POST` | `/companies/{id}/restore` | `companies.restore` | Restore archived company |
 | `GET` | `/job-applications` | `application.index` | List all job applications |
 | `GET` | `/job-categories` | `job-categories.index` | List all job categories |
 | `GET` | `/job-categories?archived=1` | `job-categories.index` | List archived categories |
