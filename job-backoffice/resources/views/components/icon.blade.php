@@ -10,6 +10,9 @@ $icons = [
     'check-circle' => 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
     'arrow-left' => 'M10 19l-7-7m0 0l7-7m-7 7h18',
     'check' => 'M5 13l4 4L19 7',
+    'menu' => 'M4 6h16M4 12h16M4 18h16',
+    'x' => 'M6 18L18 6M6 6l12 12',
+    'chevron-left' => 'M15 19l-7-7 7-7',
 ];
 
 $path = $icons[$name] ?? '';
