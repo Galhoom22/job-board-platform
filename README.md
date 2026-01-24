@@ -57,25 +57,25 @@ The **Enterprise Job Board Platform** is a production-ready recruitment solution
   <strong>Active Job Categories</strong>
 </p>
 
-<img width="2560" height="1440" alt="Active Job Categories" src="https://github.com/user-attachments/assets/7bc29d8f-30ad-4e32-a50d-8a70db209668" />
+<img width="2559" height="1439" alt="Active Job Categories" src="https://github.com/user-attachments/assets/eb04f18a-e0fe-4a81-990c-979953be1a0f" />
 
 <p align="center">
   <strong>Archived Job Categories</strong>
 </p>
 
-<img width="2560" height="1440" alt="Archived Job Categories" src="https://github.com/user-attachments/assets/22e90865-f533-4e19-b355-ca3d8bcfb60d" />
+<img width="2559" height="1439" alt="Archived Job Categories" src="https://github.com/user-attachments/assets/625cca0c-c566-4c9c-93f4-85469f5bf5af" />
 
 <p align="center">
   <strong>Company Management – Companies List</strong>
 </p>
 
-<img width="2559" height="1439" alt="company-1" src="https://github.com/user-attachments/assets/fab74b1f-f1b2-4617-8a9b-7900a30636d4" />
+<img width="2559" height="1439" alt="Company Management – Companies List" src="https://github.com/user-attachments/assets/fab74b1f-f1b2-4617-8a9b-7900a30636d4" />
 
 <p align="center">
   <strong>Company Management – Create Company Form</strong>
 </p>
 
-<img width="2559" height="1439" alt="company-2" src="https://github.com/user-attachments/assets/b5bf511b-f596-4766-8db1-12425ec07644" />
+<img width="2559" height="1439" alt="Company Management – Create Company Form" src="https://github.com/user-attachments/assets/b5bf511b-f596-4766-8db1-12425ec07644" />
 
 ---
 
